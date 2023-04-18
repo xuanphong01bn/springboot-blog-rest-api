@@ -8,4 +8,6 @@ public interface PostService {
     PostDto createPost(PostDto postDto); // interface chi co phuong thuc
     // ma ko co phan xu li
     List<PostDto> getAllPosts();
+
+    PostDto getPostById(Long id);
 }
