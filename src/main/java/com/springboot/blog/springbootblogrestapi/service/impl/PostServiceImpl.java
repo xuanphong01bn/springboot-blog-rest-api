@@ -34,6 +34,7 @@ public class PostServiceImpl implements PostService {
         return postResponse;
     }
 
+    // GET ALL POST
     @Override
     public List<PostDto> getAllPosts() {
 
@@ -42,6 +43,7 @@ public class PostServiceImpl implements PostService {
         return posts.stream().map(post ->mapToDTO(post)).collect(Collectors.toList());
     }
 
+    // GET POST BY ID
     @Override
     public PostDto getPostById(Long id) {
         Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post","id", id));
@@ -49,6 +51,37 @@ public class PostServiceImpl implements PostService {
         return mapToDTO(post);
     }
 
+    @Override
+    // UPDATE POST BY ID
+    public PostDto updatePostById(PostDto postDto, Long id) { // postDto la payload
+        // get post by ID database
+        Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post","id", id));
+        post.setTitle(postDto.getTitle());
+        postDto.setDescription(postDto.getDescription());
+        postDto.setContent(postDto.getContent());
+
+        Post postUpdated = postRepository.save(post);
+
+        return mapToDTO(postUpdated);
+    }
+
+    @Override
+    public PostDto updatePostByIdBody(PostDto postDto) {
+        Post post = postRepository.findById(postDto.getId()).orElseThrow(()-> new ResourceNotFoundException("Post","id", postDto.getId()));
+        post.setTitle(postDto.getTitle());
+        post.setDescription(postDto.getDescription());
+        post.setContent(postDto.getContent());
+
+        Post postUpdated = postRepository.save(post);
+
+        return mapToDTO(postUpdated);
+    }
+
+    @Override
+    public void deletePostById(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post","id", id));
+        postRepository.delete(post);
+    }
 
     // convert entity to DTO
     private PostDto mapToDTO(Post post) {

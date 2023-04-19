@@ -38,4 +38,22 @@ public class PostController {
 
         return ResponseEntity.ok(postService.getPostById(id));
     }
+
+    //upadte post by id
+    @PutMapping("{id}")
+    public ResponseEntity<PostDto> updatePostById(@PathVariable(name="id") Long id, @RequestBody PostDto postDto) {
+        return ResponseEntity.ok(postService.updatePostById(postDto, id));
+    }
+    //update post by id in pass in body
+    @PutMapping()
+    public ResponseEntity<PostDto> updatePostByIdBody(@RequestBody PostDto postDto) {
+        return ResponseEntity.ok(postService.updatePostById(postDto, postDto.getId()));
+    }
+
+    //delete post
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePostById(@PathVariable(name="id") Long id) {
+        postService.deletePostById(id);
+        return ResponseEntity.ok("Post delete OK !");
+    }
 }
