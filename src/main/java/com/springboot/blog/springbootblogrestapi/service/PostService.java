@@ -7,7 +7,7 @@ import java.util.List;
 public interface PostService {
     PostDto createPost(PostDto postDto); // interface chi co phuong thuc
     // ma ko co phan xu li
-    List<PostDto> getAllPosts();
+    List<PostDto> getAllPosts(int pageNo, int pageSize);
 
     PostDto getPostById(Long id);
 

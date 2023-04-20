@@ -6,6 +6,9 @@ import com.springboot.blog.springbootblogrestapi.payload.PostDto;
 import com.springboot.blog.springbootblogrestapi.repository.PostRepository;
 import com.springboot.blog.springbootblogrestapi.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,16 +34,24 @@ public class PostServiceImpl implements PostService {
         //covert entity to DTO
         PostDto postResponse = mapToDTO(newPost);
 
-        return postResponse;
+        return
+                postResponse;
     }
 
     // GET ALL POST
     @Override
-    public List<PostDto> getAllPosts() {
+    public List<PostDto> getAllPosts(int pageNo, int pageSize) {
+        // create pageable
+        Pageable pageale = PageRequest.of(pageNo, pageSize);
+
 
         // covert to DTO
-        List<Post> posts = postRepository.findAll();
-        return posts.stream().map(post ->mapToDTO(post)).collect(Collectors.toList());
+        Page<Post> posts = postRepository.findAll(pageale);
+
+        // get content for page object
+        List<Post> listOfPost = posts.getContent();
+
+        return listOfPost.stream().map(post ->mapToDTO(post)).collect(Collectors.toList());
     }
 
     // GET POST BY ID
