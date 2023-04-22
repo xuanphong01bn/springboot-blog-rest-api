@@ -2,12 +2,15 @@ package com.springboot.blog.springbootblogrestapi.service.impl;
 
 import com.springboot.blog.springbootblogrestapi.entity.Comment;
 import com.springboot.blog.springbootblogrestapi.entity.Post;
-import com.springboot.blog.springbootblogrestapi.exception.CommentRepository;
+import com.springboot.blog.springbootblogrestapi.repository.CommentRepository;
 import com.springboot.blog.springbootblogrestapi.exception.ResourceNotFoundException;
 import com.springboot.blog.springbootblogrestapi.payload.CommentDto;
 import com.springboot.blog.springbootblogrestapi.repository.PostRepository;
 import com.springboot.blog.springbootblogrestapi.service.CommentService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -35,6 +38,13 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(comment); // truyen id kieu gi cx dc, tai no tu dong tao
 
         return mapToDTO(comment);
+    }
+
+    @Override
+    public List<CommentDto> getCommentByPostId(long postId) {
+        List<Comment> comments = commentRepository.findByPostId(postId);
+
+        return comments.stream().map(comment ->mapToDTO(comment)).collect(Collectors.toList());
     }
 
     private CommentDto mapToDTO(Comment comment) {
