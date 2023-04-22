@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,5 +29,9 @@ public class Post {
     private String description;
     @Column(name="content", nullable = false)
     private String content;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true) // cascade all : thay doi o post se anh huong toi comemnt tuong ung
+    //orphanRemoval: comment nao ko lien ket voi bai dang thi tu dong xoa
+    private Set<Comment> comments = new HashSet<>();
 
 }
