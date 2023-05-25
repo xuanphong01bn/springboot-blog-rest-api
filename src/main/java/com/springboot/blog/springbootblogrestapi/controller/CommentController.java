@@ -22,9 +22,15 @@ public class CommentController {
         return new ResponseEntity<>(commentService.createComment(id, commentDto), HttpStatus.CREATED);
     }
 
+    // get all comments on a post
     @GetMapping("/posts/{postId}/comments")
     public List<CommentDto> getAllCommentsInPost(@PathVariable(name="postId") Long postId) {
         return commentService.getCommentByPostId(postId);
     }
 
+    // get spec comment on a post by id of comment
+    @GetMapping("/posts/{postId}/comments/{commentId}")
+    public CommentDto getCommetById(@PathVariable(name="postId") Long postId, @PathVariable(name="commentId") Long commentId){
+        return commentService.getCommentById(postId, commentId);
+    }
 }
