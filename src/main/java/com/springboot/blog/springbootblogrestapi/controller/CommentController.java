@@ -1,5 +1,6 @@
 package com.springboot.blog.springbootblogrestapi.controller;
 
+import com.springboot.blog.springbootblogrestapi.entity.Comment;
 import com.springboot.blog.springbootblogrestapi.payload.CommentDto;
 import com.springboot.blog.springbootblogrestapi.service.CommentService;
 import org.springframework.http.HttpStatus;
@@ -32,5 +33,11 @@ public class CommentController {
     @GetMapping("/posts/{postId}/comments/{commentId}")
     public CommentDto getCommetById(@PathVariable(name="postId") Long postId, @PathVariable(name="commentId") Long commentId){
         return commentService.getCommentById(postId, commentId);
+    }
+
+    // update comment by ID if comments exist in Post
+    @PostMapping("/posts/{postId}/comments/{commentId}")
+    public CommentDto updateCommentById (@PathVariable(name="postId") Long postId, @PathVariable(name="commentId") Long commentId, @RequestBody CommentDto commentDto) {
+        return commentService.updateCommentById(postId, commentId, commentDto);
     }
 }

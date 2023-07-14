@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class PostServiceImpl implements PostService {
 
-    private PostRepository postRepository;
+    private PostRepository postRepository; // extends Java Repository
 
     @Autowired
     public PostServiceImpl(PostRepository postRepository) { // autowired de tiem thang PostRepository vao do phai lam kieu new()

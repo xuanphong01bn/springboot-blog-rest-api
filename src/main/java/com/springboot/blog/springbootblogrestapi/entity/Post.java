@@ -20,7 +20,7 @@ public class Post {
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
-    )
+    )  // id tăng tự động
     private Long id;
 
     @Column(name="title", nullable = false)
