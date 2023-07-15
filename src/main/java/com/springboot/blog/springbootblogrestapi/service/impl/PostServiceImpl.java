@@ -6,6 +6,7 @@ import com.springboot.blog.springbootblogrestapi.payload.PostDto;
 import com.springboot.blog.springbootblogrestapi.payload.PostResponse;
 import com.springboot.blog.springbootblogrestapi.repository.PostRepository;
 import com.springboot.blog.springbootblogrestapi.service.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,9 +22,12 @@ public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository; // extends Java Repository
 
+    private ModelMapper mapper;
+
     @Autowired
-    public PostServiceImpl(PostRepository postRepository) { // autowired de tiem thang PostRepository vao do phai lam kieu new()
+    public PostServiceImpl(PostRepository postRepository, ModelMapper mapper) { // autowired de tiem thang PostRepository vao do phai lam kieu new()
         this.postRepository = postRepository;
+        this.mapper = mapper;
     }
 
     //lop ke thua interface
@@ -109,21 +113,21 @@ public class PostServiceImpl implements PostService {
 
     // convert entity to DTO
     private PostDto mapToDTO(Post post) {
-        PostDto postDto = new PostDto();
-        postDto.setId(post.getId());
-        postDto.setTitle(post.getTitle());
-        postDto.setDescription(post.getDescription());
-        postDto.setContent(post.getContent());
+        PostDto postDto = mapper.map(post, PostDto.class);
+//        postDto.setId(post.getId());
+//        postDto.setTitle(post.getTitle());
+//        postDto.setDescription(post.getDescription());
+//        postDto.setContent(post.getContent());
 
         return postDto;
     }
 
     // convert DTO to entity
     private Post mapToEntity(PostDto postDto) {
-        Post post = new Post();
-        post.setTitle(postDto.getTitle());
-        post.setDescription(postDto.getDescription());
-        post.setContent(postDto.getContent());
+        Post post = mapper.map(postDto, Post.class);
+//        post.setTitle(postDto.getTitle());
+//        post.setDescription(postDto.getDescription());
+//        post.setContent(postDto.getContent());
         return post;
     }
 }

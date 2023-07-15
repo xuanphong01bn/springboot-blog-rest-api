@@ -4,6 +4,7 @@ import com.springboot.blog.springbootblogrestapi.payload.PostDto;
 import com.springboot.blog.springbootblogrestapi.payload.PostResponse;
 import com.springboot.blog.springbootblogrestapi.service.PostService;
 import com.springboot.blog.springbootblogrestapi.utils.AppConstants;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,9 @@ public class PostController {
 
     private PostService postService;
 
+
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, ModelMapper mapper) {
         this.postService = postService;
     }
 
